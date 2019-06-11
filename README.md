@@ -13,9 +13,10 @@ including a way to detect the College Academic Distribution Requirements
 ## Installation
 
 Start R Studio and open the `cadrs.Rproj` project. R will auto-install
-packrat. Run this interactively to auto-install all package dependencies.
-It will probably prompt you to install Rtools; answer yes. Get a cup of
-coffee--this can take a while. You only need to do this once.
+packrat. Run the following command interactively to auto-install all
+package dependencies. It will probably prompt you to install Rtools;
+answer yes. Get a cup of coffee--this can take a while. You only need
+to do this once.
 
 ```
 # if you get an error, try running this again
