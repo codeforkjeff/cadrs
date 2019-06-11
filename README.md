@@ -25,7 +25,7 @@ packrat::restore()
 
 ## Running the Code
 
-TODO:
+Open `preprocess.R` in R Studio. Run the code there interactively.
+The comments explain what each part does.
 
-Open `R/crs_reshape.R` in the project view...
-
+TODO: more...

@@ -1,5 +1,5 @@
 
-# TODO: reorganize files in .R into functions and call them from this file
+# TODO: reorganize files in R/ dir into functions and call them from this file
 # instead of usine source() to directly execute code
 
 # crs_reshape.R -> calls crs_preprocess.R and post_hs_preprocess.R
