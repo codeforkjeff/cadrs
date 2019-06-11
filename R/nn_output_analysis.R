@@ -2,7 +2,7 @@ library(tidyverse)
 
 # Add school type
 
-cnn_fn <- "~/data/cnn_result_names_5.csv"
+cnn_fn <- "output/cnn_result_names_5.csv"
 
 cnn_res <- read_csv(cnn_fn, col_names = TRUE) 
 

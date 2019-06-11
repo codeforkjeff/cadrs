@@ -3,7 +3,7 @@
 library(tidyverse)
 library(openxlsx)
 
-gr_hist <- "~/data/cadrs/hsCourses.txt"
+gr_hist <- "data/cadrs/hsCourses.txt"
 df_h <- read_delim(gr_hist, delim = "|", quote = "",col_names = TRUE, na = c("", "NA", "NULL")) 
 
 # state/district course name combination
@@ -25,7 +25,7 @@ test_c <- df_h %>%
   unique(.)
 
 # Load xlsx file from ospi
-ospi_crs_fn <- "~/data/cadrs/2015-16-StateCourseCodes.xlsx"
+ospi_crs_fn <- "data/cadrs/2015-16-StateCourseCodes.xlsx"
 
 ospi_crs <- read.xlsx(ospi_crs_fn, 4, startRow = 2) %>%
   select(State.Course.Code:X6) %>%
@@ -107,7 +107,6 @@ str(c_name)
 rm(crs_content)
 gc()
 # Levenshtein Distance
-install.packages('stringdist')
 library(stringdist)
 
 uniquemodels <- as.character(c_name$c_name)
@@ -199,7 +198,7 @@ table(training1$cadr_sub)
 
 summary(training)
 
-write.csv(training1, file = "data/courses_cadrs_text_test.csv")
+write.csv(training1, file = "output/courses_cadrs_text_test.csv")
 #########
 
 

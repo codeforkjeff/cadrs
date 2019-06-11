@@ -3,7 +3,7 @@ library(caret)
 library(pryr)
 
 ##Transform course table to one feature per course
-gr_hist <- "~/data/cadrs/hsCourses.txt"
+gr_hist <- "data/cadrs/hsCourses.txt"
 df_h <- read_delim(gr_hist, delim = "|", col_names = TRUE, na = c("", "NA", "NULL")) 
 object_size(df_h)
 # how many unique students in this dataset
@@ -13,7 +13,7 @@ length(unique(df_h$ResearchID))
 #how many unique courses
 length(unique(df_h$CourseTitle))
 
-source("/home/joseh/source/cadrs-collaboration/preprocess/course_preprocess.R")
+source("R/crs_preprocess.R")
 
 # We need to reshape the dataframe
 # Try on whole data (might take some time)
@@ -50,7 +50,7 @@ pivot_matrix2 <- pivot_matrix2 %>%
 #####
 # attach hs_grad info
 #####
-source("/home/joseh/source/cadrs-collaboration/preprocess/post_hs_preprocess.R")
+source("R/post_hs_preprocess.R")
 hs_grad_courses <- left_join(pivot_matrix, hs_grads, by = c("ResearchID"))
 
 hs_grad_courses <- hs_grad_courses %>%
