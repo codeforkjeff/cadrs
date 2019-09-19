@@ -5,7 +5,7 @@
 library(tidyverse)
 library(openxlsx)
 
-gr_hist <- "data/cadrs/hsCourses.txt"
+gr_hist <- "~/data/cadrs/hsCourses.txt"
 df_h <- read_delim(gr_hist, delim = "|", quote = "",col_names = TRUE, na = c("", "NA", "NULL")) 
 
 # state/district course name combination
@@ -18,13 +18,13 @@ table(df_h$ReportSchoolYear)
 ########
 ###LOOK AT STATE COURSE FILE COVERAGE
 # Load xlsx file from ospi
-ospi_crs_fn <- "data/cadrs/2016-17StateCourseCodes.xlsx"
+ospi_crs_fn <- "~/data/cadrs/2016-17StateCourseCodes.xlsx"
 
 ospi_crs17 <- read.xlsx(ospi_crs_fn, 4, startRow = 2) %>%
   select(State.Course.Code:X6) %>%
   rename(content_area = X6)
 #####
-ospi_crs_fn <- "data/cadrs/2015-16-StateCourseCodes.xlsx"
+ospi_crs_fn <- "~/data/cadrs/2015-16-StateCourseCodes.xlsx"
 
 ospi_crs16 <- read.xlsx(ospi_crs_fn, 4, startRow = 2) %>%
   select(State.Course.Code:X6) %>%
@@ -170,7 +170,7 @@ table(training_set_b$ospi_sub)
 
 
 # save 
-write.csv(training_set_b, file = "output/courses_ospi_b.csv")
+write.csv(training_set_b, file = "data/courses_ospi_b.csv")
 
 # manual clean-up AVOID! 
 # ## reduce content areas 
