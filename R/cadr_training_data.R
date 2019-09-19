@@ -149,9 +149,6 @@ opp_labels_d_14 <- inner_join(total_unique_14, dups_14) %>%
 ## append 
 opp_labels_d <- bind_rows(opp_labels_d_17,opp_labels_d_16, opp_labels_d_15, opp_labels_d_14)
 
-cadrs_training_17 <- st_17 %>%
-  select(StateCourseCode, cadrs = CollegeAcademicDistributionRequirementsFlag) %>%
-
 # write_csv(opp_labels_d, path = "~/data/cadrs/cadrs_dupp_labels.csv")
 
 rm(list = ls(pattern = "dups_"))
