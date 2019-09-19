@@ -29,3 +29,14 @@ Open `preprocess.R` in R Studio. Run the code there interactively.
 The comments explain what each part does.
 
 TODO: more...
+
+## Analyses
+
+To run the Renton analysis:
+
+Copy `settings_default.R` to `settings.R` and edit paths to point to the files on your system.
+
+Then run this script:
+```
+./run.sh
+```
