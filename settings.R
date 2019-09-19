@@ -3,7 +3,6 @@ library(here)
 
 #### input paths
 
-#gr_hist <- here("data/cadrs/hsCourses.txt")
 gr_hist <- 'S:/Data/CADRs/eScienceCollaboration/data/cadrs_collaboration_data_2019_06_18/hsCourses.txt'
 
 ospi_crs17_fn <- here("data/cadrs/2016-17StateCourseCodes.xlsx")
@@ -15,7 +14,6 @@ ospi_crs15_fn <- here("data/cadrs/2014_15_StateCourseCodes.csv")
 ospi_crs14_fn <- here("data/cadrs/2013_14_StateCourseCodes.csv")
 
 # renton course catalog
-#rsd_crs_fn <- "~/data/rsd_unique_3.csv"
 rsd_crs_fn <- here("data/rsd_unique_3.csv")
 
 dim_school_path <- 'S:/Data/CADRs/eScienceCollaboration/data/cadrs_collaboration_data_2019_06_18/Dim_School.txt'
@@ -33,18 +31,14 @@ cadrs_training_path <- here("output/cadrs/cadrs_training.csv")
 # TODO: filtering needs to be put into a script somewhere.
 clean_train_fn <- here("data/ospi_stud_clean.csv")
 
-#rsd_cadrs_training_path <- "~/data/cadrs/cadrs_training_rsd.csv"
 rsd_cadrs_training_path <- here("data/cadrs/cadrs_training_rsd.csv")
 
 dim_course_path <- here("output/dim_course.csv")
 
 sqlite_database_path <- here("output/ccerCadrDB.db")
 
-#course_2017_cohort_path <- "/home/ubuntu/data/db_files/course_2017_cohort.csv" #from SQL
 course_2017_cohort_path <- here("output/course_2017_cohort.csv") #from SQL
 
-#enroll_2017_cohort_path <- "/home/ubuntu/data/db_files/enroll_2017_cohort.csv" #from SQL
 enroll_2017_cohort_path <- here("output/enroll_2017_cohort.csv") #from SQL
 
-#course_2017_cohort_clean_path <- "/home/ubuntu/data/db_files/preprocess/course_2017_cohort_clean.csv"
 course_2017_cohort_clean_path <- here("output/course_2017_cohort_clean.csv")
