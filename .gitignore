@@ -7,3 +7,4 @@ packrat/src
 data/
 output/
 .vscode
+settings.R
