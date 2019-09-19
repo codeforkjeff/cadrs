@@ -5,7 +5,7 @@ library(tidyverse)
 nsc_fn <- "/home/joseh/data/cadr_update/postSecDems.txt"
 nsc <- fread(nsc_fn, na.strings = c("NA", "NULL"))
 
-enr_fn <- "~/data/cadrs/enrollments.tx"
+enr_fn <- "~/data/cadrs/enrollments.txt"
 enr <- read_delim(enr_fn, delim = "|", col_names = TRUE, na = c("", "NA", "NULL")) 
 # Get HS grads
 names(enr)
