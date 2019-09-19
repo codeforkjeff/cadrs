@@ -90,7 +90,9 @@ ospi_crs <- bind_rows(
 ) %>%
   unique() %>%
   select(-Subject.Area.Code, -`Type.(AP/IB)`)
-# write_csv(ospi_crs, "/home/ubuntu/data/db_files/preprocess/state_courses.csv")
+
+write_csv(ospi_crs, dim_course_path)
+
 # CLEAN UP RSD FILE 
 # Begin with descriptions add course name in description
 names(rsd_crs)

@@ -29,3 +29,5 @@ clean_train_fn <- here("data/ospi_stud_clean.csv")
 
 #rsd_cadrs_training_path <- "~/data/cadrs/cadrs_training_rsd.csv"
 rsd_cadrs_training_path <- here("data/cadrs/cadrs_training_rsd.csv")
+
+dim_course_path <- here("output/dim_course.csv")
