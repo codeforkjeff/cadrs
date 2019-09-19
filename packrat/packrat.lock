@@ -220,6 +220,12 @@ Version: 2.0.0
 Hash: f9402a5745453fcfaae452c682557e78
 Requires: Rcpp, forcats, hms, readr, tibble
 
+Package: here
+Source: CRAN
+Version: 0.1
+Hash: 90e1a97508a0d7383b0eeb11e397e763
+Requires: rprojroot
+
 Package: highr
 Source: CRAN
 Version: 0.7
@@ -440,6 +446,12 @@ Version: 1.11
 Hash: a30b0c41b60d981f41dc8c98f2136297
 Requires: base64enc, evaluate, htmltools, jsonlite, knitr, mime,
     stringr, tinytex, yaml
+
+Package: rprojroot
+Source: CRAN
+Version: 1.3-2
+Hash: a25c3f70c166fb3fbabc410eb32b6366
+Requires: backports
 
 Package: rstudioapi
 Source: CRAN
