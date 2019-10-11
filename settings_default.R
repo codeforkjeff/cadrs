@@ -37,10 +37,6 @@ dim_course_path <- here("output/dim_course.csv")
 
 sqlite_database_path <- here("output/ccerCadrDB.db")
 
-course_2017_cohort_path <- "/home/ubuntu/data/db_files/course_2017_cohort.csv" #from SQL
-
-enroll_2017_cohort_path <- "/home/ubuntu/data/db_files/enroll_2017_cohort.csv" #from SQL
-
 course_2017_cohort_clean_path <- "/home/ubuntu/data/db_files/preprocess/course_2017_cohort_clean.csv"
 
 svm_predictions_path <- "/home/joseh/data/svm_cadr_student_predictions_CV.csv"

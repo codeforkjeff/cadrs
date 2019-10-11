@@ -4,6 +4,7 @@
 library(tidyverse)
 library(openxlsx)
 library(data.table)
+library(RSQLite)
 library(here)
 
 source(here("settings.R"))
@@ -12,16 +13,17 @@ stu_enroll_fn <- enrollment_path
 sch_dim_fn <- dim_school_path
 stu_dim_fn <- dim_student_path
 gr_hist_fn <- gr_hist
-gr_hist_2017_fn <- course_2017_cohort_path #from SQL
-gr_enroll_cohort_fn <- enroll_2017_cohort_path #from SQL
 
 stu_enroll <- fread(stu_enroll_fn, na.strings = c("NA", "NULL"))
 sch_dim <- fread(sch_dim_fn, quote="", na.strings = c("NA", "NULL"))
 stu_dim <- fread(stu_dim_fn, quote="", na.strings = c("NA", "NULL"))
 
 gr_hist <- fread(gr_hist_fn, quote="", na.strings = c("NA", "NULL", ''))
-gr_hist_2017 <- fread(gr_hist_2017_fn, na.strings = c("NA", "NULL", ''))
-gr_enroll_cohort <- fread(gr_enroll_cohort_fn, na.strings = c("NA", "NULL", ''))
+
+db_conn <- dbConnect(RSQLite::SQLite(), sqlite_database_path)
+
+gr_hist_2017 <- dbReadTable(db_conn, "cohort_17")
+gr_enroll_cohort <- dbReadTable(db_conn, "enroll_cohort")
 
 table(gr_hist_2017$content_area)
 table(gr_hist_2017$dTermEndYear)

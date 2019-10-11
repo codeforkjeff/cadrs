@@ -1,6 +1,3 @@
-.headers on
-.mode csv
-.output output/course_2017_cohort.csv
 
 DROP VIEW IF EXISTS cohort_17;
 
@@ -20,4 +17,3 @@ JOIN dimSchool sch
     AND enr.ReportSchoolYear = sch.AcademicYear
 WHERE enr.GradeLevelSortOrder = 15 AND enr.GradReqYear = 2017 AND enr.dGraduate = 1 AND sch.dRoadMapRegionFlag = 1);
 
-select * from cohort_17;
