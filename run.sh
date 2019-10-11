@@ -4,14 +4,14 @@
 
 $R_EXEC -e "packrat::restore()"
 
+# load all input data
+$R_EXEC R/load_input_data.R
+
 # create basic training data
 $R_EXEC R/cadr_training_data.R
 
 # create training data for Renton
 $R_EXEC preprocess/training_data_RSD.R
-
-# create cohort files
-$R_EXEC R/create_cohort_files.R
 
 # clean the cohort files
 $R_EXEC R/courses_cohort_cleanup.R

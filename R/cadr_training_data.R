@@ -8,72 +8,30 @@ library(data.table)
 library(here)
 
 source(here("settings.R"))
+source(here("R/lib.R"))
 
-df_h <- read_delim(gr_hist, delim = "|", quote = "",col_names = TRUE, na = c("", "NA", "NULL"),
-  col_types = cols(
-    ReportSchoolYear = col_double(),
-    DistrictCode = col_character(),
-    DistrictName = col_character(),
-    SchoolCode = col_character(),
-    SchoolName = col_character(),
-    LocationID = col_character(),
-    ResearchID = col_double(),
-    TermEndDate = col_date(format = ""),
-    Term = col_character(),
-    CourseID = col_character(),
-    CourseTitle = col_character(),
-    StaffID = col_character(),
-    GradeLevelWhenCourseTaken = col_double(),
-    LetterGrade = col_character(),
-    CreditsAttempted = col_double(),
-    CreditsEarned = col_double(),
-    StateCourseCode = col_character(),
-    StateCourseName = col_character(),
-    ContentAreaCode = col_character(),
-    ContentAreaName = col_character(),
-    APIBCourseCode = col_character(),
-    APIBCourseName = col_character(),
-    CTECIPCode = col_character(),
-    CTECIPName = col_character(),
-    CTEClusterID = col_character(),
-    CTEClusterName = col_character(),
-    CTEPathwayID = col_character(),
-    CTEPathwayName = col_character(),
-    CTEAssessment = col_character(),
-    hasCTEIndustryCertificateFlag = col_double(),
-    CTEVocCompleterFlag = col_double(),
-    CTEDirectTranscriptionAvailableFlag = col_logical(),
-    TechPrepCourseFlag = col_double(),
-    TechPrepProgramAreaCompleterFlag = col_double(),
-    FullCourseDesignationCode = col_character(),
-    InternationalBaccalaureateFlag = col_double(),
-    CollegeattheHighSchoolFlag = col_double(),
-    HonorsFlag = col_double(),
-    AdvancedPlacementFlag = col_double(),
-    RunningStartFlag = col_double(),
-    CollegeAcademicDistributionRequirementsFlag = col_double(),
-    CambridgeProgramFlag = col_double(),
-    OnlineFlag = col_double(),
-    dPassedFlag = col_double(),
-    dTermEndYear = col_double(),
-    dTermEndWeekOfYear = col_double(),
-    dSchoolYear = col_double()
-  )
-)
+db_conn <- dbConnect(SQLite(), sqlite_database_path)
+
+df_h <- dbReadTable(db_conn, "courses")
 
 
 ######
 # STATE COURSE CATALOGUE FILES YEARLY
 # Load xlsx file from ospi
-ospi_crs17 <- read.xlsx(ospi_crs17_fn, 4, startRow = 2) %>%
-  select(State.Course.Code:X6) %>%
-  rename(content_area = X6)
+# ospi_crs17 <- read.xlsx(ospi_crs17_fn, 4, startRow = 2) %>%
+#   select(State.Course.Code:X6) %>%
+#   rename(content_area = X6)
+
+ospi_crs17 <- dbReadTable(db_conn, "ospi_crs17")
 #####
 
 
-ospi_crs16 <- read.xlsx(ospi_crs16_fn, 4, startRow = 2) %>%
-  select(State.Course.Code:X6) %>%
-  rename(content_area = X6)
+# ospi_crs16 <- read.xlsx(ospi_crs16_fn, 4, startRow = 2) %>%
+#   select(State.Course.Code:X6) %>%
+#   rename(content_area = X6)
+
+ospi_crs16 <- dbReadTable(db_conn, "ospi_crs16")
+
 ####
 
 # not used in this script, so Jeff commented this out
@@ -449,3 +407,5 @@ cadrs_training_c <- cadrs_training_c %>%
 table(cadrs_training_c$cadrs)
 
 write_csv(cadrs_training_c, path = cadrs_training_path)
+
+import_table_from_dataframe(cadrs_training_c, 'cadrs_training_c')

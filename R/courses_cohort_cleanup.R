@@ -8,22 +8,18 @@ library(RSQLite)
 library(here)
 
 source(here("settings.R"))
-
-stu_enroll_fn <- enrollment_path
-sch_dim_fn <- dim_school_path
-stu_dim_fn <- dim_student_path
-gr_hist_fn <- gr_hist
-
-stu_enroll <- fread(stu_enroll_fn, na.strings = c("NA", "NULL"))
-sch_dim <- fread(sch_dim_fn, quote="", na.strings = c("NA", "NULL"))
-stu_dim <- fread(stu_dim_fn, quote="", na.strings = c("NA", "NULL"))
-
-gr_hist <- fread(gr_hist_fn, quote="", na.strings = c("NA", "NULL", ''))
+source(here("R/lib.R"))
 
 db_conn <- dbConnect(RSQLite::SQLite(), sqlite_database_path)
 
-gr_hist_2017 <- dbReadTable(db_conn, "cohort_17")
-gr_enroll_cohort <- dbReadTable(db_conn, "enroll_cohort")
+stu_enroll <- dbReadTable(db_conn, "enrollment", check.names=FALSE)
+sch_dim <- dbReadTable(db_conn, "dimSchool", check.names=FALSE)
+stu_dim <- dbReadTable(db_conn, "dimStudent", check.names=FALSE)
+
+gr_hist <- dbReadTable(db_conn, "courses", check.names=FALSE)
+
+gr_hist_2017 <- dbReadTable(db_conn, "cohort_17", check.names=FALSE)
+gr_enroll_cohort <- dbReadTable(db_conn, "enroll_cohort", check.names=FALSE)
 
 table(gr_hist_2017$content_area)
 table(gr_hist_2017$dTermEndYear)
@@ -184,4 +180,6 @@ results_unique_c <- missing_carea %>% select(state_spec_course) %>% unique()
 # Conditionals for 12th grade electives that count towards cadrs (journalism etc...)
 
 write_csv(gr_hist_2017, course_2017_cohort_clean_path)
-##
+
+import_table_from_dataframe(gr_hist_2017, "course_2017_cohort_clean")
+

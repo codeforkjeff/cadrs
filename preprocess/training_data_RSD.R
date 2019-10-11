@@ -5,45 +5,18 @@ library(stringi)
 library(here)
 
 source(here("settings.R")) # When not running using bash R I have to use "source/cadrs/"
+source(here("R/lib.R"))
 
-ospi_crs17 <- read.xlsx(ospi_crs17_fn, 4, startRow = 2) %>%
-  select(State.Course.Code:X6) %>%
-  rename(content_area = X6)
+db_conn <- dbConnect(SQLite(), sqlite_database_path)
 
-ospi_crs17$`State.Course.Code` <- stri_encode(ospi_crs17$`State.Course.Code`, "", "UTF-8")
-ospi_crs17$Name <- stri_encode(ospi_crs17$Name, "", "UTF-8")
-ospi_crs17$Description <- stri_encode(ospi_crs17$Description, "", "UTF-8")
-ospi_crs17$content_area <- stri_encode(ospi_crs17$content_area, "", "UTF-8")
-
-ospi_crs16 <- read.xlsx(ospi_crs16_fn, 4, startRow = 2) %>%
-  select(State.Course.Code:X6) %>%
-  rename(content_area = X6)
-
-ospi_crs16$`State.Course.Code` <- stri_encode(ospi_crs16$`State.Course.Code`, "", "UTF-8")
-ospi_crs16$Name <- stri_encode(ospi_crs16$Name, "", "UTF-8")
-ospi_crs16$Description <- stri_encode(ospi_crs16$Description, "", "UTF-8")
-ospi_crs16$content_area <- stri_encode(ospi_crs16$content_area, "", "UTF-8")
-
-ospi_crs15 <- fread(ospi_crs15_fn, skip = 2, header = T, drop = c("V1","V5"), encoding='UTF-8') %>%
-  rename(State.Course.Code = `State Course Code`) %>%
-  mutate(State.Course.Code = as.character(State.Course.Code),
-         State.Course.Code = str_pad(State.Course.Code, 5, pad = "0"))
-
-ospi_crs15$`State.Course.Code` <- stri_encode(ospi_crs15$`State.Course.Code`, "", "UTF-8")
-ospi_crs15$Name <- stri_encode(ospi_crs15$Name, "", "UTF-8")
-ospi_crs15$Description <- stri_encode(ospi_crs15$Description, "", "UTF-8")
-
-ospi_crs15 <- left_join(ospi_crs15, ospi_crs16 %>%
-                          select(State.Course.Code, content_area), by = 'State.Course.Code')
+ospi_crs17 <- dbReadTable(db_conn, "ospi_crs17", check.names=FALSE)
+ospi_crs16 <- dbReadTable(db_conn, "ospi_crs16", check.names=FALSE)
+ospi_crs15 <- dbReadTable(db_conn, "ospi_crs15", check.names=FALSE)
 
 missing <- ospi_crs15 %>%
   filter(is.na(content_area))
 
-rsd_crs <- fread(rsd_crs_fn, na.strings = c("NA", "NULL"), encoding='UTF-8') %>%
-  mutate(State.Course.Code = as.character(`State Code`),
-         State.Course.Code = str_pad(State.Course.Code, 5, pad = "0"),
-         cadr = if_else(`CADR Flag` == 'Yes', 1,0),
-         State.Course.Code = str_remove(State.Course.Code, "[A-Z]$"))
+rsd_crs <- dbReadTable(db_conn, "rsd_crs", check.names=FALSE)
 
 # Some course CADR classes not correct, fix here using exact string match
 not_cadrs <- c(
@@ -114,6 +87,8 @@ ospi_crs <- bind_rows(
   select(-Subject.Area.Code, -`Type.(AP/IB)`)
 
 write_csv(ospi_crs, dim_course_path)
+# TODO: should logic to generate DimCourse be moved into load_input_data.R?
+import_table_from_dataframe(ospi_crs, "DimCourse")
 
 # CLEAN UP RSD FILE 
 # Begin with descriptions add course name in description
@@ -462,3 +437,5 @@ ospi_rsd_train <- ospi_rsd_train %>%
 
 
 write_csv(ospi_rsd_train, rsd_cadrs_training_path)
+
+import_table_from_dataframe(ospi_rsd_train, "cadrs_training_rsd")
